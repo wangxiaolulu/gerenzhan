@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    body{
+        background: #000;
+    }
+    a{
+        text-decoration: none;
+    }
+        .scene{
+            width: 400px;height: 400px;
+            position: fixed;
+            top: 0;left: 0;right: 0;bottom: 0;
+            margin: auto;
+            perspective: 800px;
+        }
+        .box{
+            width: 100%;height: 100%;position: absolute;
+            transform-style:preserve-3d;
+            transform-origin: center center -100px;
+        }
+        .box div{
+            width: 100%;height: 100%;
+            position: absolute;
+            left: 0;top: 0;
+            text-align: center;
+            line-height: 200px;
+            font-size: 30px;
+        }
+        .box div:nth-child(1){
+            background: #ccc;
+            /*opacity: 0.5;*/
+            transform:rotateX(-90deg);
+            transform-origin:top;
+            /*background: url(images/practice/brain_01.png);*/
+        }
+
+        .box div:nth-child(2){
+            background: #ccc;
+            /*opacity: 0.5;*/
+            transform:rotateY(90deg);
+            transform-origin:left;
+            /*background: url(images/practice/apple.jpg);*/
+        }
+        .box div:nth-child(3){
+            /*background:#ccc;*/
+            /*opacity: 0.5;*/
+            /*background: url(images/practice/apple.jpg);*/
+        }
+        .box div:nth-child(4){
+            background: #ccc;
+            /*opacity: 0.5;*/
+            transform:rotateY(-90deg);
+            transform-origin:right;
+            /*background: url(images/practice/apple.jpg);*/
+        }
+
+        .box div:nth-child(5){
+            background: #ccc;
+            /*opacity: 0.5;*/
+            transform:rotateX(90deg);
+            transform-origin:bottom;
+            /*background: url(images/practice/apple.jpg);*/
+
+        }
+        .box div:nth-child(6){
+            background: #ccc;
+            /*opacity: 0.5;*/
+            /*background: url(images/practice/apple.jpg);*/
+        }
+        /*.scene:hover .box{*/
+             /*transform: rotateY(360deg);*/
+            /*transform:rotateX(180deg) rotateY(180deg) rotateZ(180deg);*/
+            /*transform-origin: center center;*/
+        /*}*/
+
+    </style>
+    <script>
+        window.onload=function(){
+            var box=document.getElementsByClassName("box")[0];
+            var clientW=document.documentElement.clientWidth;
+            var clientH=document.documentElement.clientHeight;
+            document.onmousedown=function(e){
+                var startX= e.clientX;
+                var startY= e.clientY;
+                document.onmousemove=function(e){
+                    var moveX= e.clientX;
+                    var moveY= e.clientY;
+                    console.log(moveX);
+                    console.log(moveY);
+                    var endX=moveX-clientW/2;
+                    var endY=moveY-clientH/2;
+                    var mo=Math.sqrt(endX*endX+endY*endY);
+                    var x=endX/mo;
+                    var y=endY/mo;
+                    var a=Math.atan2(x,y)*180/Math.PI;
+                    var angle=Math.abs(moveX-startX)>Math.abs(moveY-startY)?Math.abs(moveX-startX):Math.abs(moveY-startY);
+                    x=Math.abs(x);
+                    y=Math.abs(y);
+                    if(a>0&&a<=90){
+                        y=-y;
+                        angle=-angle;
+                    }
+                    if(a<0&&a>=-90){
+                        x=-x;y=-y;
+                    }
+                    if(a<=-90&&a>=-180){
+                        x=-x;
+                        angle=-angle;
+                    }
+                    box.style.transform="rotate3d("+y+","+x+",0,"+angle+"deg)";
+                    e.preventDefault();
+                }
+                document.onmouseup=function(){
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="scene">
+    <div class="box">
+        <div>
+            <a href="http://baidu.com">
+                <img src="images/practice/brain_01.png" alt="">
+            </a>
+        </div>
+        <div>
+            <a href="http://jq22.com/yanshi472">
+                <img src="images/practice/apple.jpg" alt="">
+            </a>
+        </div>
+        <div>
+            <a href="">
+                <img src="images/practice/apple.jpg" alt="">
+            </a>
+        </div>
+        <div>
+            <a href="">
+                <img src="images/practice/apple.jpg" alt="">
+            </a>
+        </div>
+        <div>
+            <a href="">
+                <img src="images/practice/apple.jpg" alt="">
+            </a>
+        </div>
+        <div>
+            <a href="">
+                <img src="images/practice/apple.jpg" alt="">
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
